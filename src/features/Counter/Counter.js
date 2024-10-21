@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 /**
  * @typedef {import('./types').CounterProps} CounterProps
  */
@@ -10,11 +8,9 @@ import { useState } from 'react';
  * @returns {JSX.Element}
  */
 
-export const Counter = (props) => {
-  const { minCount, maxCount, startCount } = props;
-  const [count, setCount] = useState(startCount);
-  const newMinCount = count <= minCount;
-  const newMaxCount = count >= maxCount;
+export const Counter = ({ count, setCount }) => {
+  const newMinCount = count <= 0;
+  const newMaxCount = count >= 10;
 
   const handleUpClick = () => {
     if (newMinCount) return;
@@ -38,7 +34,7 @@ export const Counter = (props) => {
         Прибавить
       </button>
       <p>
-        <button onClick={() => setCount(startCount)}>
+        <button onClick={() => setCount(2)}>
         Сброс на начальное значение
         </button>
       </p>
