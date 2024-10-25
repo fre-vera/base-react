@@ -12,8 +12,26 @@ import './Card.css';
 
 export const Card = (props) => {
   return (
-    <div className={'card'}>
-      <img src={props.cardData.thumbnailUrl} />
-    </div>
+    <li className={'card'}>
+      {/* name */}
+      {props.name && (
+        <h2 className='cardName'>
+          {props.name}
+        </h2>
+      )}
+      {/* image */}
+      {props.image && (
+        <img className='cardImg'
+          src={props.image}
+          alt={props.name}
+        />
+      )}
+      {/* text */}
+      {props.text && (
+        <p className='cardText'>
+          {props.text}
+        </p>
+      )}
+    </li>
   );
 };

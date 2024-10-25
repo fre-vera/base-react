@@ -1,30 +1,62 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Card } from 'entity';
-import { Counter } from 'features';
+import { Counter, Photos, Todos } from 'features';
 import { API_BASE_URL } from 'shared';
+
+/**
+ * @typedef {import('./types').AppProps} AppProps
+ */
+
+/**
+ * @function App
+ * @param {AppProps} props
+ * @returns {JSX.Element}
+ */
 
 export const App = (props) => {
   const startCount = 2;
-  const [count, setCount] = useState(startCount);
-  const [cards, setCards] = useState([]);
+  const [photoCount, setPhotoCount] = useState(startCount);
+  const [photos, setPhotos] = useState([]);
+  const [todoCount, setTodoCount] = useState(startCount);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const endPoint = `photos?_start=0&_limit=${count}`;
+      const endPoint = `photos?_start=0&_limit=${photoCount}`;
       const response = await fetch(`${API_BASE_URL}/${endPoint}`);
       const photos = await response.json();
-      setCards(photos);
+      setPhotos(photos);
     })();
-  }, [count]);
+  }, [photoCount]);
+
+  useEffect(() => {
+    (async () => {
+      const endPoint = `todos?_start=0&_limit=${todoCount}`;
+      const response = await fetch(`${API_BASE_URL}/${endPoint}`);
+      const todos = await response.json();
+      setTodos(todos);
+    })();
+  }, [todoCount]);
 
   return (
     <div className="app">
       <h1>{props.name}</h1>
-      <Counter count={count} setCount={setCount}/>
-      {cards.map((card) => (
-        <Card cardData={card} />
-      ))}
+      {/* Photo widget */}
+      <div>
+        <Counter name={'Photo count'}
+          count={photoCount}
+          setCount={setPhotoCount}
+        />
+        <Photos photos={photos} />
+      </div>
+      {/* Todo widget */}
+      <div>
+        <Counter name={'Todo count'}
+          count={todoCount}
+          setCount={setTodoCount}
+        />
+        <Todos todos={todos} />
+      </div>
     </div>
   );
 };

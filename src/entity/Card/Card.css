@@ -1,3 +1,16 @@
 .card {
+  position: relative;
+  min-width: 150px;
+  min-height: 150px;
   list-style-type: none;
+  background: red;
+}
+
+.card h2 {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 16px;
 }
