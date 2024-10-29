@@ -1,4 +1,4 @@
-import './App.css';
+import classes from './App.module.scss';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from 'shared';
 import { Gallery, Tasks } from 'widgets';
@@ -39,7 +39,7 @@ export const App = (props) => {
   }, [todoCount]);
 
   return (
-    <div className={'app'}>
+    <div className={classes.app}>
       <h1>{props.name}</h1>
       {/* Photo widget */}
       <div>

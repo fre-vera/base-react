@@ -1,5 +1,5 @@
 import { getRandomColor } from '../../shared/utils';
-import './Card.css';
+import classes from './Card.module.scss';
 
 /**
  * @typedef {import('./types').CardProps} CardProps
@@ -13,25 +13,25 @@ import './Card.css';
 
 export const Card = (props) => {
   return (
-    <li className={'card'}
+    <li className={classes.card}
       style={{ background: getRandomColor() }}
     >
       {/* name */}
       {props.name && (
-        <h2 className={'name'}>
+        <h2 className={classes.name}>
           {props.name}
         </h2>
       )}
       {/* image */}
       {props.image && (
-        <img className={'image'}
+        <img className={classes.image}
           src={props.image}
           alt={props.name}
         />
       )}
       {/* text */}
       {props.text && (
-        <p className={'text'}>
+        <p className={classes.text}>
           {props.text}
         </p>
       )}
