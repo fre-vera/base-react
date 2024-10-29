@@ -1,3 +1,4 @@
+import { getRandomColor } from '../../shared/utils';
 import './Card.css';
 
 /**
@@ -12,23 +13,25 @@ import './Card.css';
 
 export const Card = (props) => {
   return (
-    <li className={'card'}>
+    <li className={'card'}
+      style={{ background: getRandomColor() }}
+    >
       {/* name */}
       {props.name && (
-        <h2 className='cardName'>
+        <h2 className={'name'}>
           {props.name}
         </h2>
       )}
       {/* image */}
       {props.image && (
-        <img className='cardImg'
+        <img className={'image'}
           src={props.image}
           alt={props.name}
         />
       )}
       {/* text */}
       {props.text && (
-        <p className='cardText'>
+        <p className={'text'}>
           {props.text}
         </p>
       )}

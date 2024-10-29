@@ -8,7 +8,7 @@
  * @returns {JSX.Element}
  */
 
-export const Counter = ({ count, setCount }) => {
+export const Counter = ({ count, setCount, name }) => {
   const newMinCount = count <= 0;
   const newMaxCount = count >= 10;
 
@@ -25,7 +25,7 @@ export const Counter = ({ count, setCount }) => {
   return (
     <div>
       <p>
-        <h2>Count: {count}</h2>
+        {name}: {count}
       </p>
       <button onClick={handleUpClick}>
         Убавить
