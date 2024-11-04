@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Photos, Counter } from 'features';
+import { usePhotos } from 'shared/hooks';
 
 /**
  * @typedef {import('./types').GalleryProps} GalleryProps
@@ -11,6 +13,10 @@ import { Photos, Counter } from 'features';
  */
 
 export const Gallery = (props) => {
+  const photosStore = usePhotos();
+  console.log('Photos:',photosStore.photos);
+  useEffect(() => {});
+
   return (
     <div>
       <Counter
