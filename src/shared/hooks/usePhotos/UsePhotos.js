@@ -1,19 +1,17 @@
+import { create } from 'zustand';
 import { API_BASE_URL } from 'shared';
 
 /**
  * @typedef {import('./types').PhotosStateCreator} StateCreator
+ * @typedef {import('./types').PhotosState } State
  */
-import { create } from 'zustand';
 
 export const usePhotos = create(/** @type {StateCreator} */(set) => ({
-  count: 0,
-  photos: [{
-    albulmId: 1,
-    id: 1,
-    title: 'title',
-    url: 'url',
-    thumbnaiUrl: 'url',
-  }],
+  /* State for count */
+  photoCount: 0,
+  setPhotoCount: (photoCount) => set((/** @type {State} */state) => ({ ...state, photoCount })),
+  /* State for photos */
+  photos: [],
   isPhotosLoading: false,
   photosErrorMessage: '',
   getPhotos: async (count) => {
@@ -29,5 +27,5 @@ export const usePhotos = create(/** @type {StateCreator} */(set) => ({
       set({ photosErrorMessage: 'Не удалось загрузить фотографии.', isPhotosLoading: false });
     }
   },
-  resetPhotos: () => set(() => ({ photos: [] })),
+  resetPhotos: () => set((/** @type {State} */state) => ({ ...state, photos: [] })),
 }));

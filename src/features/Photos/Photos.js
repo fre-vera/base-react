@@ -18,7 +18,8 @@ export const Photos = (props) => {
         <Card key={photo.id}
           id={photo.id}
           name={photo.title}
-          image={photo.thumbnaiUrl} />
+          image={photo.thumbnailUrl}
+        />
       ))}
     </ul>
   );
