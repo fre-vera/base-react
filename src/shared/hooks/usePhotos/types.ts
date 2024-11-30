@@ -18,4 +18,6 @@ export type PhotosState = {
   resetPhotos: () => void;
 };
 
+export type SetterCallback = (state: PhotosState) => PhotosState;
+
 export type PhotosStateCreator = (set: Function) => PhotosState;

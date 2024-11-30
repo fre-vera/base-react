@@ -1,18 +1,17 @@
+import { create } from 'zustand';
 import { API_BASE_URL } from 'shared';
 
 /**
  * @typedef {import('./types').TodosStateCreator} StateCreator
+ * @typedef {import('./types').TodosState } State
 **/
 
-import { create } from 'zustand';
-
 export const useTodos = create(/** @type {StateCreator} */(set) => ({
-  todos: [{
-    userId: 1,
-    id: 2,
-    title: 'title',
-    completed: false,
-  }],
+  /* State for count */
+  todoCount: 0,
+  setTodoCount: (todoCount) => set((/** @type {State} */state) => ({ ...state, todoCount })),
+  /* State for todos */
+  todos: [],
   isTodosLoading: false,
   todosErrorMessage: '',
   getTodos: async (count) => {
@@ -25,7 +24,7 @@ export const useTodos = create(/** @type {StateCreator} */(set) => ({
 
       set({ todos: data, todosErrorMessage: '', isTodosLoading: false });
     } catch (error) {
-      set({ todosErrorMessage: 'Не удалось загрузить задачи.', isTodosLoading: false });
+      set({ todosErrorMessage: 'Failed to load tasks.', isTodosLoading: false });
     }
   },
   resetTodos: () => set(() => ({ todos: [] })),
