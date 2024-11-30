@@ -1,7 +1,8 @@
 import classes from './App.module.scss';
-import { useEffect, useState } from 'react';
-import { API_BASE_URL } from 'shared';
+import { useEffect } from 'react';
 import { Gallery, Tasks } from 'widgets';
+import { usePhotos, useTodos } from 'shared/hooks';
+
 
 /**
  * @typedef {import('./types').AppProps} AppProps
@@ -14,49 +15,23 @@ import { Gallery, Tasks } from 'widgets';
  */
 
 export const App = (props) => {
-  const startCount = 2;
-  const [photoCount, setPhotoCount] = useState(startCount);
-  const [photos, setPhotos] = useState([]);
-  const [todoCount, setTodoCount] = useState(startCount);
-  const [todos, setTodos] = useState([]);
+  const defaultCount = 4;
+  const photosState = usePhotos();
+  const todosState = useTodos();
 
   useEffect(() => {
-    (async () => {
-      const endPoint = `photos?_start=0&_limit=${photoCount}`;
-      const response = await fetch(`${API_BASE_URL}/${endPoint}`);
-      const photos = await response.json();
-      setPhotos(photos);
-    })();
-  }, [photoCount]);
+    photosState.setPhotoCount(defaultCount);
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      const endPoint = `todos?_start=0&_limit=${todoCount}`;
-      const response = await fetch(`${API_BASE_URL}/${endPoint}`);
-      const todos = await response.json();
-      setTodos(todos);
-    })();
-  }, [todoCount]);
+    todosState.setTodoCount(defaultCount);
+  }, []);
 
   return (
     <div className={classes.app}>
-      <h1>{props.name}</h1>
-      {/* Photo widget */}
-      <div>
-        <Gallery
-          count={photoCount}
-          setCount={setPhotoCount}
-          photos={photos}
-        />
-      </div>
-      {/* Todo widget */}
-      <div>
-        <Tasks
-          count={todoCount}
-          setCount={setTodoCount}
-          todos={todos}
-        />
-      </div>
+      <h3>{props.name}</h3>
+      <Gallery />
+      <Tasks />
     </div>
   );
 };

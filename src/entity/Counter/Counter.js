@@ -1,3 +1,5 @@
+// import { usePhotos } from 'shared/hooks';
+
 /**
  * @typedef {import('./types').CounterProps} CounterProps
  */
@@ -9,10 +11,13 @@
  */
 
 export const Counter = ({ count, setCount, name }) => {
+  // const photosStore = usePhotos();
+
   const newMinCount = count <= 0;
   const newMaxCount = count >= 10;
 
   const handleUpClick = () => {
+    // photosStore.resetPhotos();
     if (newMinCount) return;
     setCount(count - 1);
   };
@@ -24,17 +29,29 @@ export const Counter = ({ count, setCount, name }) => {
 
   return (
     <div>
+      {/* Name */}
       <p>
         {name}: {count}
       </p>
-      <button onClick={handleUpClick}>
+      {/* Up */}
+      <button
+        disabled={newMinCount}
+        onClick={handleUpClick}
+      >
         Убавить
       </button>
-      <button onClick={handleDownClick}>
+      {/* Down */}
+      <button
+        disabled={newMaxCount}
+        onClick={handleDownClick}
+      >
         Прибавить
       </button>
+      {/* Reset */}
       <p>
-        <button onClick={() => setCount(2)}>
+        <button
+          onClick={() => setCount(2)}
+        >
         Сброс на начальное значение
         </button>
       </p>
