@@ -1,4 +1,4 @@
-// import { usePhotos } from 'shared/hooks';
+import classes from './Counter.module.scss';
 
 /**
  * @typedef {import('./types').CounterProps} CounterProps
@@ -10,51 +10,53 @@
  * @returns {JSX.Element}
  */
 
-export const Counter = ({ count, setCount, name }) => {
-  // const photosStore = usePhotos();
+export const Counter = (props) => {
 
-  const newMinCount = count <= 0;
-  const newMaxCount = count >= 10;
+  const minCount = props.minCount ? props.minCount : 0;
+  const maxCount = props.maxCount ? props.maxCount : 10;
+  const isMinCount = props.count <= minCount;
+  const isMaxCount = props.count >= maxCount;
 
-  const handleUpClick = () => {
-    // photosStore.resetPhotos();
-    if (newMinCount) return;
-    setCount(count - 1);
+  const handleAddCount = () => {
+    if (isMaxCount) return;
+    props.setCount(props.count + 1);
   };
 
-  const handleDownClick = () => {
-    if (newMaxCount) return;
-    setCount(count + 1);
+  const handleReduceCount = () => {
+    if (isMinCount) return;
+    props.setCount(props.count - 1);
   };
 
   return (
-    <div>
+    <div className={classes.counter}>
       {/* Name */}
-      <p>
-        {name}: {count}
-      </p>
-      {/* Up */}
-      <button
-        disabled={newMinCount}
-        onClick={handleUpClick}
-      >
-        Убавить
-      </button>
-      {/* Down */}
-      <button
-        disabled={newMaxCount}
-        onClick={handleDownClick}
-      >
-        Прибавить
-      </button>
+      <h1>{props.name}</h1>
+      <div>
+        {/* Minus */}
+        <button className={classes.button}
+          disabled={isMinCount || props.isDisabled}
+          onClick={handleReduceCount}
+        >
+          minus
+        </button>
+        {/* Plus */}
+        <button className={classes.button}
+          disabled={isMaxCount || props.isDisabled}
+          onClick={handleAddCount}
+        >
+          plus
+        </button>
+      </div>
       {/* Reset */}
       <p>
-        <button
-          onClick={() => setCount(2)}
+        <button className={classes.button}
+          disabled={isMinCount || props.isDisabled}
+          onClick={() => props.setCount(minCount)}
         >
-        Сброс на начальное значение
+          reset
         </button>
       </p>
+      <p>Counter:{props.count}</p>
     </div>
   );
 };
