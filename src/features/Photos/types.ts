@@ -1,3 +1,11 @@
-export type PhotosCounterProps = {
-  name: string;
+export type PhotoDetails = {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+};
+
+export type PhotosProps = {
+  photos: PhotoDetails[];
 };

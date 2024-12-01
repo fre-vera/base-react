@@ -4,3 +4,13 @@
   color: #fff;
   background-color: #282c34;
 }
+.link {
+  padding-top: 50px;
+  font-size: 35px;
+  text-decoration: none;
+  color: inherit;
+
+  &:visited {
+    text-decoration: none;
+  }
+}
