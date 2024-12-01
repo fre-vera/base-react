@@ -2,6 +2,7 @@ import classes from './Tasks.module.scss';
 import { TodosCounter, Todos } from 'features';
 import { useEffect } from 'react';
 import { useTodos } from 'shared/hooks';
+import { Preloader } from 'shared/ui';
 
 /**
  * @typedef {import('./types').TasksProps} TasksProps
@@ -26,6 +27,7 @@ export const Tasks = () => {
   return (
     <div className={classes.tasks}>
       <TodosCounter name={'Tasks count'}/>
+      <Preloader isActive={todosStore.isTodosLoading} />
       <Todos todos={todosStore.todos} />
     </div>
   );

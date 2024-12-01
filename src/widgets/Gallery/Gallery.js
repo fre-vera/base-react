@@ -2,6 +2,7 @@ import classes from './Gallery.module.scss';
 import { useEffect } from 'react';
 import { PhotosCounter, Photos } from 'features';
 import { usePhotos } from 'shared/hooks';
+import { Preloader } from 'shared/ui';
 
 /**
  * @function Gallery
@@ -21,6 +22,7 @@ export const Gallery = () => {
   return (
     <div className={classes.gallery}>
       <PhotosCounter name={'Photo count'}/>
+      <Preloader isActive={photosStore.isPhotosLoading} />
       <Photos photos={photosStore.photos} />
     </div>
   );
