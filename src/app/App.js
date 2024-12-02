@@ -1,7 +1,7 @@
 import classes from './App.module.scss';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { usePhotos, useTodos } from 'shared/hooks';
+import { usePhotosStore, useTodosStore } from 'shared/hooks';
 import { HomePage, PhotoPage, TodoPage } from 'shared/pages';
 
 /**
@@ -16,15 +16,15 @@ import { HomePage, PhotoPage, TodoPage } from 'shared/pages';
 
 export const App = (props) => {
   const defaultCount = 4;
-  const photosState = usePhotos();
-  const todosState = useTodos();
+  const photosStore = usePhotosStore();
+  const todosStore = useTodosStore();
 
   useEffect(() => {
-    photosState.setPhotoCount(defaultCount);
+    photosStore.setPhotoCount(defaultCount);
   }, []);
 
   useEffect(() => {
-    todosState.setTodoCount(defaultCount);
+    todosStore.setTodoCount(defaultCount);
   }, []);
 
   return (
