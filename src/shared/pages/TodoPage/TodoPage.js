@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useTodos } from 'shared/hooks';
+import { useTodosStore } from 'shared/hooks';
 
 /**
  * @function TodoPagePage
@@ -7,10 +7,9 @@ import { useTodos } from 'shared/hooks';
  */
 
 export const TodoPage = () => {
-  const { todoId } = useParams();
-  const todosState = useTodos();
-  const todo = todosState.todos
-    .find((todo) => todo.id === Number(todoId));
+  const params = useParams();
+  const todosStore = useTodosStore();
+  const todo = todosStore.getTodoById(Number(params.todoId));
 
   if (!todo) return <p>Task not found</p>;
 
