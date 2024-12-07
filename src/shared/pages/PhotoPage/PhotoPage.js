@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { usePhotos } from 'shared/hooks';
+import { usePhotosStore } from 'shared/hooks';
 
 /**
  * @function PhotoPage
@@ -7,10 +7,9 @@ import { usePhotos } from 'shared/hooks';
  */
 
 export const PhotoPage = () => {
-  const { photoId } = useParams();
-  const photosState = usePhotos();
-  const photo = photosState.photos
-    .find((photo) => photo.id === Number(photoId));
+  const params = useParams();
+  const photosStore = usePhotosStore();
+  const photo = photosStore.getPhotoById(Number(params.photoId));
 
   if (!photo) return <p>Photo not found</p>;
 

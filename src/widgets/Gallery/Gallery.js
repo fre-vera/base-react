@@ -1,7 +1,7 @@
 import classes from './Gallery.module.scss';
 import { useEffect } from 'react';
 import { PhotosCounter, Photos } from 'features';
-import { usePhotos } from 'shared/hooks';
+import { usePhotosStore } from 'shared/hooks';
 import { Preloader } from 'shared/ui';
 
 /**
@@ -10,7 +10,7 @@ import { Preloader } from 'shared/ui';
  */
 
 export const Gallery = () => {
-  const photosStore = usePhotos();
+  const photosStore = usePhotosStore();
 
   useEffect(() => {
     const { photoCount } = photosStore;

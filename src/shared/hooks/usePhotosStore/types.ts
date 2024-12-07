@@ -6,18 +6,20 @@ export type PhotoFromAPI = {
   thumbnailUrl: string;
 };
 
-export type PhotosState = {
-  /* State for count */
+export type PhotosStore = {
+  /* Store for count */
   photoCount: number;
   setPhotoCount: (photoCount: number) => void;
-  /* State for photos */
+  /* Store for photos */
   photos: PhotoFromAPI[] | [];
   isPhotosLoading: boolean;
   photosErrorMessage: string;
   getPhotos: (count: number) => void;
   resetPhotos: () => void;
+  /* Method for getting a photo by ID */
+  getPhotoById: (photoId: number) => PhotoFromAPI | undefined;
 };
 
-export type SetterCallback = (state: PhotosState) => PhotosState;
+export type SetterCallback = (store: PhotosStore) => PhotosStore;
 
-export type PhotosStateCreator = (set: Function) => PhotosState;
+export type PhotosStoreCreator = (set: Function) => PhotosStore;

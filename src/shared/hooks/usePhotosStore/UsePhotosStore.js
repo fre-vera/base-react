@@ -2,16 +2,16 @@ import { create } from 'zustand';
 import { API_BASE_URL } from 'shared';
 
 /**
- * @typedef {import('./types').PhotosStateCreator} StateCreator
+ * @typedef {import('./types').PhotosStoreCreator} StoreCreator
  * @typedef {import('./types').SetterCallback} Setter
- * @typedef {import('./types').PhotosState } State
+ * @typedef {import('./types').PhotosStore } Store
  */
 
-export const usePhotos = create(/** @type {StateCreator} */(set) => ({
-  /* State for count */
+export const usePhotosStore = create(/** @type {StoreCreator} */(set, get) => ({
+  /* Store for count */
   photoCount: 0,
-  setPhotoCount: (photoCount) => set((/** @type {Setter} */state) => ({ ...state, photoCount })),
-  /* State for photos */
+  setPhotoCount: (photoCount) => set((/** @type {Setter} */store) => ({ ...store, photoCount })),
+  /* Store for photos */
   photos: [],
   isPhotosLoading: false,
   photosErrorMessage: '',
@@ -26,5 +26,10 @@ export const usePhotos = create(/** @type {StateCreator} */(set) => ({
       set({ photosErrorMessage: 'Failed to upload photos.', isPhotosLoading: false });
     }
   },
-  resetPhotos: () => set((/** @type {Setter} */state) => ({ ...state, photos: [] })),
+  resetPhotos: () => set((/** @type {Setter} */store) => ({ ...store, photos: [] })),
+
+  getPhotoById: (photoId) => {
+    const { photos } = get();
+    return photos.find((photo) => photo.id === photoId);
+  },
 }));
