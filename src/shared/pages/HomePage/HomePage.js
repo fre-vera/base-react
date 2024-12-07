@@ -1,4 +1,4 @@
-import styles from './HomePage.module.scss';
+import classes from './HomePage.module.scss';
 
 /**
  * @function HomePage
@@ -6,9 +6,9 @@ import styles from './HomePage.module.scss';
  */
 export const HomePage = () => {
   return (
-    <div className={styles.homePage}>
+    <div className={classes.homePage}>
       <h1>Welcome to the Home Page</h1>
-      <img src='./assets/home.jpg' alt="Web development" className={styles.image} />
+      <img src='./assets/home.jpg' alt="Web development" className={classes.image} />
     </div>
   );
 };
