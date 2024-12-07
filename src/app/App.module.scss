@@ -1,8 +1,13 @@
 .app {
+  position: fixed;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
   height: 100vh;
   text-align: center;
   color: #fff;
   background-color: #282c34;
+  padding-top: 65px;
 }
 .link {
   padding-top: 50px;
