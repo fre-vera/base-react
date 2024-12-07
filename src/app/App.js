@@ -2,7 +2,7 @@ import classes from './App.module.scss';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { usePhotosStore, useTodosStore } from 'shared/hooks';
-import { HomePage, PhotoPage, PhotosPage, TodoPage } from 'shared/pages';
+import { HomePage, PhotoPage, PhotosPage, TodoPage, TodosPage } from 'shared/pages';
 import { Header } from '../widgets/index';
 /**
  * @typedef {import('./types').AppProps} AppProps
@@ -36,6 +36,7 @@ export const App = (props) => {
             <Route path={'/'} element={<HomePage />} />
             <Route path={'/photos/'} element={<PhotosPage />} />
             <Route path={'/photo/:photoId'} element={<PhotoPage />} />
+            <Route path={'/todos/'} element={<TodosPage />} />
             <Route path={'/todo/:todoId'} element={<TodoPage />} />
           </Routes>
         </header>
