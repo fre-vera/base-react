@@ -1,6 +1,6 @@
 import { Counter } from 'entity';
 import { useEffect } from 'react';
-import { useTodosStore } from 'shared/stores';
+import { useTodos } from 'shared/stores';
 
 /**
  * @typedef {import('./types').TodosCounterProps} Props
@@ -13,7 +13,7 @@ import { useTodosStore } from 'shared/stores';
  */
 
 export const TodosCounter = (props) => {
-  const todosStore = useTodosStore();
+  const todosStore = useTodos();
 
   useEffect(() => {
     todosStore.setTodoCount(1);

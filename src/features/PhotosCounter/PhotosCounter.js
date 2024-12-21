@@ -1,6 +1,6 @@
 import { Counter } from 'entity';
 import { useEffect } from 'react';
-import { usePhotosStore } from 'shared/stores';
+import { usePhotos } from 'shared/stores';
 
 /**
  * @typedef {import('./types').PhotosCounterProps} Props
@@ -13,7 +13,7 @@ import { usePhotosStore } from 'shared/stores';
  */
 
 export const PhotosCounter = (props) => {
-  const photosStore = usePhotosStore();
+  const photosStore = usePhotos();
 
   useEffect(() => {
     photosStore.setPhotoCount(1);

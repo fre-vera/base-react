@@ -1,7 +1,7 @@
 import classes from './Tasks.module.scss';
 import { TodosCounter, Todos } from 'features';
 import { useEffect } from 'react';
-import { useTodosStore } from 'shared/stores';
+import { useTodos } from 'shared/stores';
 import { Preloader } from 'shared/ui';
 
 /**
@@ -15,7 +15,7 @@ import { Preloader } from 'shared/ui';
 
 
 export const Tasks = () => {
-  const todosStore = useTodosStore();
+  const todosStore = useTodos();
 
   useEffect(() => {
     const { todoCount } = todosStore;

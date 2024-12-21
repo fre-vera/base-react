@@ -1,7 +1,7 @@
 import classes from './App.module.scss';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { usePhotosStore, useTodosStore } from 'shared/stores';
+import { usePhotos, useTodos } from 'shared/stores';
 import { HomePage, PhotoPage, PhotosPage, TodoPage, TodosPage } from 'shared/pages';
 import { Header } from '../widgets/index';
 /**
@@ -16,8 +16,8 @@ import { Header } from '../widgets/index';
 
 export const App = (props) => {
   const defaultCount = 4;
-  const photosStore = usePhotosStore();
-  const todosStore = useTodosStore();
+  const photosStore = usePhotos();
+  const todosStore = useTodos();
 
   useEffect(() => {
     photosStore.setPhotoCount(defaultCount);

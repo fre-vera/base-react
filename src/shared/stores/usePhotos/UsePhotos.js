@@ -124,11 +124,11 @@ const resetPhoto = (set) => {
 };
 
 /**
- * @function usePhotosStore
+ * @function usePhotos
  * @returns {PhotoStore}
  **/
 
-export const usePhotosStore = create(/** @type {StoreCreator} */(set) => ({
+export const usePhotos = create(/** @type {StoreCreator} */(set) => ({
   /* Photo count state */
   photoCount: 0,
   setPhotoCount: partial(setPhotoCount, set),

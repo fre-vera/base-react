@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTodosStore } from 'shared/stores';
+import { useTodos } from 'shared/stores';
 import { getRandomColor } from 'shared/utils';
 import classes from './Todo.module.scss';
 
@@ -11,7 +11,7 @@ import classes from './Todo.module.scss';
 
 export const TodoPage = () => {
   const params = useParams();
-  const todosStore = useTodosStore();
+  const todosStore = useTodos();
   const todo = todosStore.getTodoById(Number(params.todoId));
   const [backgroundColor, setBackgroundColor] = useState('');
 

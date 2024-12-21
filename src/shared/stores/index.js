@@ -1,2 +1,2 @@
-export { usePhotosStore } from './usePhotosStore/UsePhotosStore';
-export { useTodosStore } from './useTodosStore/UseTodosStore';
+export { usePhotos } from './usePhotos/UsePhotos';
+export { useTodos } from './useTodos/UseTodos';

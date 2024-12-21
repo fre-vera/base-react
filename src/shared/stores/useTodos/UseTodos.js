@@ -6,7 +6,7 @@ import { API_BASE_URL } from 'shared';
  * @typedef {import('./types').TodosStore } Store
 **/
 
-export const useTodosStore = create(/** @type {StoreCreator} */(set, get) => ({
+export const useTodos = create(/** @type {StoreCreator} */(set, get) => ({
   /* Store for count */
   todoCount: 0,
   setTodoCount: (todoCount) => set((/** @type {Store} */store) => ({ ...store, todoCount })),
