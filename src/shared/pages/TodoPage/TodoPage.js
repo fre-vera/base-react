@@ -5,7 +5,7 @@ import { getRandomColor } from 'shared/utils';
 import classes from './Todo.module.scss';
 
 /**
- * @function TodoPagePage
+ * @function TodoPage
  * @returns {JSX.Element}
  */
 
