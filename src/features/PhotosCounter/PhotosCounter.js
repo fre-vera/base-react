@@ -1,6 +1,6 @@
 import { Counter } from 'entity';
 import { useEffect } from 'react';
-import { usePhotosStore } from 'shared/hooks';
+import { usePhotosStore } from 'shared/stores';
 
 /**
  * @typedef {import('./types').PhotosCounterProps} Props

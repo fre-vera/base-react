@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { usePhotosStore } from 'shared/hooks';
+import { usePhotosStore } from 'shared/stores';
 
 /**
  * @function PhotoPage

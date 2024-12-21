@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTodosStore } from 'shared/hooks';
+import { useTodosStore } from 'shared/stores';
 import { getRandomColor } from 'shared/utils';
 import classes from './Todo.module.scss';
 

@@ -1,6 +1,6 @@
 import { Counter } from 'entity';
 import { useEffect } from 'react';
-import { useTodosStore } from 'shared/hooks';
+import { useTodosStore } from 'shared/stores';
 
 /**
  * @typedef {import('./types').TodosCounterProps} Props
