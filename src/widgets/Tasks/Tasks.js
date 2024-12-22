@@ -1,7 +1,7 @@
 import classes from './Tasks.module.scss';
 import { TodosCounter, Todos } from 'features';
 import { useEffect } from 'react';
-import { useTodos } from 'shared/hooks';
+import { useTodos } from 'shared/stores';
 import { Preloader } from 'shared/ui';
 
 /**

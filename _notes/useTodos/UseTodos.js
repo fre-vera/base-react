@@ -2,15 +2,15 @@ import { create } from 'zustand';
 import { API_BASE_URL } from 'shared';
 
 /**
- * @typedef {import('./types').TodosStateCreator} StateCreator
- * @typedef {import('./types').TodosState } State
+ * @typedef {import('./types').TodosStoreCreator} StoreCreator
+ * @typedef {import('./types').TodosStore } Store
 **/
 
-export const useTodos = create(/** @type {StateCreator} */(set) => ({
-  /* State for count */
+export const useTodos = create(/** @type {StoreCreator} */(set, get) => ({
+  /* Store for count */
   todoCount: 0,
-  setTodoCount: (todoCount) => set((/** @type {State} */state) => ({ ...state, todoCount })),
-  /* State for todos */
+  setTodoCount: (todoCount) => set((/** @type {Store} */store) => ({ ...store, todoCount })),
+  /* Store for todos */
   todos: [],
   isTodosLoading: false,
   todosErrorMessage: '',
@@ -28,4 +28,9 @@ export const useTodos = create(/** @type {StateCreator} */(set) => ({
     }
   },
   resetTodos: () => set(() => ({ todos: [] })),
+
+  getTodoById: (todoId) => {
+    const { todos } = get();
+    return todos.find((todo) => todo.id === todoId);
+  },
 }));

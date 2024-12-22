@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { usePhotos } from 'shared/hooks';
+import { usePhotos } from 'shared/stores';
+import { Preloader } from 'shared/ui';
 
 /**
  * @function PhotoPage
@@ -7,18 +9,26 @@ import { usePhotos } from 'shared/hooks';
  */
 
 export const PhotoPage = () => {
-  const { photoId } = useParams();
-  const photosState = usePhotos();
-  const photo = photosState.photos
-    .find((photo) => photo.id === Number(photoId));
+  const params = useParams();
+  const photosStore = usePhotos();
 
-  if (!photo) return <p>Photo not found</p>;
+  if (!params.photoId) return <p>Invalid photo id</p>;
+
+  useEffect(() => {
+    if (!params.photoId) return;
+    photosStore.getPhotoById(params.photoId);
+  }, []);
+
+  if (!photosStore.photo) return <p>Photo not found</p>;
 
   return (
-    <div>
-      <h2>{photo.title}</h2>
-      <img src={photo.url}
-        alt={photo.title} />
-    </div>
+    <>
+      <div>
+        <h2>{photosStore.photo.title}</h2>
+        <img src={photosStore.photo.url}
+          alt={photosStore.photo.title}/>
+      </div>
+      <Preloader isActive={photosStore.isPhotoLoading} />
+    </>
   );
 };

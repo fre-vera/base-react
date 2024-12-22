@@ -5,16 +5,18 @@ export type TodosFromAPI = {
   completed: boolean;
 };
 
-export type TodosState = {
-  /* State for count */
+export type TodosStore = {
+  /* Store for count */
   todoCount: number;
   setTodoCount: (todoCount: number) => void;
-  /* State for todos */
+  /* Store for todos */
   todos: TodosFromAPI[] | [];
   isTodosLoading: boolean;
   todosErrorMessage: string;
   getTodos: (count: number) => void;
   resetTodos: () => void;
+  /* Method for getting a todo by ID */
+  getTodoById: (todoId: number) => TodosFromAPI | undefined;
 };
 
-export type TodosStateCreator = (set: Function) => TodosState;
+export type TodosStoreCreator = (set: Function) => TodosStore;

@@ -1,6 +1,6 @@
 import { Counter } from 'entity';
 import { useEffect } from 'react';
-import { usePhotos } from 'shared/hooks';
+import { usePhotos } from 'shared/stores';
 
 /**
  * @typedef {import('./types').PhotosCounterProps} Props
@@ -13,19 +13,19 @@ import { usePhotos } from 'shared/hooks';
  */
 
 export const PhotosCounter = (props) => {
-  const photosState = usePhotos();
+  const photosStore = usePhotos();
 
   useEffect(() => {
-    photosState.setPhotoCount(1);
+    photosStore.setPhotoCount(1);
   }, []);
 
   return (
     <Counter name={'Photos count'}
       minCount={1}
-      count={photosState.photoCount}
-      setCount={photosState.setPhotoCount}
+      count={photosStore.photoCount}
+      setCount={photosStore.setPhotoCount}
       maxCount={10}
-      isDisabled={photosState.isPhotosLoading}
+      isDisabled={photosStore.isPhotosLoading}
     />
   );
 };
