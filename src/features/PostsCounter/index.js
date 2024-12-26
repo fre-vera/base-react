@@ -1,0 +1,2 @@
+export { PostsCounter } from './PostsCounter';
+
