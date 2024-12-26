@@ -1,8 +1,8 @@
 import classes from './App.module.scss';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { usePhotos, useTodos } from 'shared/stores';
-import { HomePage, PhotoPage, PhotosPage, TodoPage, TodosPage } from 'shared/pages';
+import { usePhotos, usePosts, useTodos } from 'shared/stores';
+import { HomePage, PhotoPage, PhotosPage, TodoPage, TodosPage, PostPage, PostsPage } from 'shared/pages';
 import { Header } from '../widgets/index';
 /**
  * @typedef {import('./types').AppProps} AppProps
@@ -18,6 +18,7 @@ export const App = (props) => {
   const defaultCount = 4;
   const photosStore = usePhotos();
   const todosStore = useTodos();
+  const postsStore = usePosts();
 
   useEffect(() => {
     photosStore.setPhotoCount(defaultCount);
@@ -25,6 +26,10 @@ export const App = (props) => {
 
   useEffect(() => {
     todosStore.setTodoCount(defaultCount);
+  }, []);
+
+  useEffect(() => {
+    postsStore.setPostCount(defaultCount);
   }, []);
 
   return (
@@ -38,6 +43,8 @@ export const App = (props) => {
             <Route path={'/photo/:photoId'} element={<PhotoPage />} />
             <Route path={'/todos/'} element={<TodosPage />} />
             <Route path={'/todo/:todoId'} element={<TodoPage />} />
+            <Route path={'/posts/'} element={<PostsPage />} />
+            <Route path={'/post/:postId'} element={<PostPage />} />
           </Routes>
         </header>
       </div>
