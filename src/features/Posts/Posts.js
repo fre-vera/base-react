@@ -15,10 +15,9 @@ export const Posts = (props) => {
 
   return (
     <ul className={classes.posts}>
-      {props.posts.map((post) => (
-        <Card key={post.postId}
-          id={post.postId}
-          name={post.title}
+      {props.posts.map((posts) => (
+        <Card.Post key={posts.id}
+          post={posts}
         />
       ))}
     </ul>
