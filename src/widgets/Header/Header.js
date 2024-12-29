@@ -21,8 +21,8 @@ export const Header = () => {
         <Link to="/todos" className={classes.navLink}>
           Todos
         </Link>
-        <Link to="/users" className={classes.navLink}>
-          Users
+        <Link to="/posts" className={classes.navLink}>
+          Posts
         </Link>
       </nav>
     </header>
