@@ -13,7 +13,7 @@ import classes from './Card.module.scss';
 /**
  * @function Photo
  * @param {PhotoProps} props
- * @returns
+ * @returns {JSX.Element}
  */
 
 const Photo = (props) => {
@@ -21,9 +21,7 @@ const Photo = (props) => {
 
   return (
     <Link to={endPoint}>
-      <li className={classes.card}
-        style={{ background: getRandomColor() }}
-      >
+      <li className={classes.card}>
         <h2 className={classes.name}>
           {props.photo.title}
         </h2>
@@ -39,7 +37,7 @@ const Photo = (props) => {
 /**
  * @function Todo
  * @param {TodoProps} props
- * @returns
+ * @returns {JSX.Element}
  */
 
 const Todo = (props) => {
@@ -61,7 +59,7 @@ const Todo = (props) => {
 /**
  * @function Post
  * @param {PostProps} props
- * @returns
+ * @returns {JSX.Element}
  */
 
 const Post = (props) => {
@@ -73,24 +71,23 @@ const Post = (props) => {
   }, []);
 
   return (
-    <div className={classes.container}>
+    <div className={classes['post-container']}>
       <Link to={endPoint}>
-        <li className={classes.card}
-          style={{ background: getRandomColor() }}
+        <li className={classes['post-card']}
+          style={{ background }}
         >
-          <div className={classes.post}>
-            <h2 className={classes.name}>
-              {props.post.title}
-            </h2>
-            <p className={classes.text}>
-              {props.post.body}
-            </p>
-          </div>
+          <h2 className={classes['post-title']}>
+            {props.post.title}
+          </h2>
+          <p className={classes['post-text']}>
+            {props.post.body}
+          </p>
         </li>
       </Link>
     </div>
   );
 };
+
 
 /** @type {Card} */
 export const Card = {

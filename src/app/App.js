@@ -1,6 +1,6 @@
 import classes from './App.module.scss';
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { usePhotos, usePosts, useTodos } from 'shared/stores';
 import { HomePage, PhotoPage, PhotosPage, TodoPage, TodosPage, PostPage, PostsPage } from 'shared/pages';
 import { Header } from '../widgets/index';
