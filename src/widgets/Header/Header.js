@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import classes from './Header.module.scss';
 
 /**
@@ -7,23 +7,58 @@ import classes from './Header.module.scss';
  */
 
 export const Header = () => {
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
+
+  const handleClick = (e, path) => {
+    if (isActive(path)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.left}>
-        <Link to="/" className={classes.logo}>
+        <NavLink
+          to="/"
+          onClick={(e) => handleClick(e, '/')}
+          className={`${classes.logo} ${isActive('/') ? classes.active : ''}`}
+          aria-disabled={isActive('/')}
+        >
           Home
-        </Link>
+        </NavLink>
       </div>
       <nav className={classes.right}>
-        <Link to="/photos" className={classes.navLink}>
+        <NavLink
+          to="/photos"
+          onClick={(e) => handleClick(e, '/photos')}
+          className={`${classes.navLink} ${
+            isActive('/photos') ? classes.active : ''
+          }`}
+          aria-disabled={isActive('/photos')}
+        >
           Photos
-        </Link>
-        <Link to="/todos" className={classes.navLink}>
+        </NavLink>
+        <NavLink
+          to="/todos"
+          onClick={(e) => handleClick(e, '/todos')}
+          className={`${classes.navLink} ${
+            isActive('/todos') ? classes.active : ''
+          }`}
+          aria-disabled={isActive('/todos')}
+        >
           Todos
-        </Link>
-        <Link to="/posts" className={classes.navLink}>
+        </NavLink>
+        <NavLink
+          to="/posts"
+          onClick={(e) => handleClick(e, '/posts')}
+          className={`${classes.navLink} ${
+            isActive('/posts') ? classes.active : ''
+          }`}
+          aria-disabled={isActive('/posts')}
+        >
           Posts
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );
