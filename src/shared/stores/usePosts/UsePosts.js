@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { API_BASE_URL } from 'shared/config';
+import { API_FIREBASE_URL } from 'shared/config';
 import { partial } from 'shared/utils';
 
 /**
@@ -38,10 +38,15 @@ const getPosts = async (set, count) => {
       posts: [],
       postsErrorMessage: '',
     }));
-    const endPoint = `posts?_start=0&_limit=${count}`;
-    const response = await fetch(`${API_BASE_URL}/${endPoint}`);
+    const response = await fetch(`${API_FIREBASE_URL}/posts.json`);
     if (!response.ok) throw new Error('Posts not received');
-    const posts = await response.json();
+    const data = await response.json();
+
+    const posts = Object.entries(data)
+      .filter(([id, post]) => post !== null)
+      .map(([id, post]) => ({ id, ...post }))
+      .slice(0, count);
+
     set(/** @type {SetterCallback} */(store) => ({
       ...store,
       isPostsLoading: false,
@@ -86,8 +91,7 @@ const getPostById = async (set, id) => {
       post: null,
       postsErrorMessage: '',
     }));
-    const endPoint = `posts/${id}`;
-    const response = await fetch(`${API_BASE_URL}/${endPoint}`);
+    const response = await fetch(`${API_FIREBASE_URL}/posts/${id}.json`);
     if (!response.ok) throw new Error('Post not received');
     const post = await response.json();
     set(/** @type {SetterCallback} */(store) => ({
@@ -139,7 +143,7 @@ const addPost = async (set, postForCreate) => {
       body: JSON.stringify(postForCreate),
       headers: { 'Content-type': 'application/json' },
     };
-    const queryURL = `${API_BASE_URL}/posts`;
+    const queryURL = `${API_FIREBASE_URL}/posts.json`;
     const response = await fetch(queryURL, queryOpts);
     if (!response.ok) throw new Error('Failed to create post');
     const resData = await response.json();
