@@ -1,0 +1,205 @@
+.creatorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.openButton {
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #9acd32;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.openButton:before {
+  content: '';
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: -8px;
+  left: -75px;
+  transform: skewX(-45deg);
+}
+
+.openButton:hover {
+  background: #9acd32;
+  color: #fff;
+}
+
+.openButton:hover:before {
+  left: 150px;
+  transition: 0.5s ease-in-out;
+}
+
+.inputField,
+.textArea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.textArea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.inputField:disabled,
+.textArea:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.addButton,
+.cancelButton {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton {
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #9acd32;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.addButton:before {
+  content: '';
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: -8px;
+  left: -75px;
+  transform: skewX(-45deg);
+}
+
+.addButton:hover {
+  background: #9acd32;
+  color: #fff;
+}
+
+.addButton:hover:before {
+  left: 150px;
+  transition: 0.5s ease-in-out;
+}
+
+.cancelButton {
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #9acd32;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.cancelButton:before {
+  content: '';
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: -8px;
+  left: -75px;
+  transform: skewX(-45deg);
+}
+
+.cancelButton:hover {
+  background: #9acd32;
+  color: #fff;
+}
+
+.cancelButton:hover:before {
+  left: 150px;
+  transition: 0.5s ease-in-out;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #1f1f1f;
+  padding: 30px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1100;
+}
+
+.modal h2 {
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+
+  &:hover {
+    color: #f00;
+  }
+}
