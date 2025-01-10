@@ -1,8 +1,10 @@
 import classes from './Blog.module.scss';
-import { PostsCounter, Posts } from 'features';
+import { PostsCounter } from 'features';
 import { useEffect } from 'react';
-import { usePosts, useTodos } from 'shared/stores';
+import { usePosts } from 'shared/stores';
+import { Card } from 'features';
 import { Preloader } from 'shared/ui';
+import { Creator } from 'features/Posts/Creator';
 
 /**
  * @typedef {import('./types').PostsProps} PostsProps
@@ -27,8 +29,14 @@ export const Blog = () => {
   return (
     <div className={classes.tasks}>
       <PostsCounter name={'Posts count'}/>
+      <Creator />
+      {/* Список постов */}
+      <ul className={classes.posts}>
+        {postsStore.posts.map((post) => (
+          <Card.Post key={post.id} post={post} />
+        ))}
+      </ul>
       <Preloader isActive={postsStore.isPostsLoading} />
-      <Posts posts={postsStore.posts} />
     </div>
   );
 };
