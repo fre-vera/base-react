@@ -29,25 +29,25 @@ export type PostStore = {
   postCount: number;
   setPostCount: (postCount: number) => void;
 
-  /* State for posts store */
+  /* state for getting posts */
   isPostsLoading: boolean;
   posts: PostFromAPI[] | [];
   postsErrorMessage: string;
   getPosts: (count: number) => void;
   resetPosts: () => void;
 
-  /* State for post store */
+  /* state for getting post */
   isPostLoading: boolean;
   post: PostFromAPI | null;
   postErrorMessage: string;
   getPostById: (postId: string | number) => void;
   resetPost: () => void;
 
-  /* Add post functionality */
+  /* state for create post */
   isPostCreating: boolean;
   isPostCreated: boolean;
   postCreatingErrorMessage: string;
-  addPost: (postData: PostFromAPI) => void;
+  creatPost: (postData: PostFromAPI) => void;
 };
 
 export type SetterCallback = (store: PostStore) => PostStore;
