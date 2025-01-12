@@ -11,14 +11,28 @@ export const Creator = () => {
   const [formData, setFormData] = useState(
     /** @type {PostForCreate} */ ({ title: '', body: '' }),
   );
+  const [notification, setNotification] = useState({ type: '', message: '' });
 
-  const { creatPost, isPostCreating, postCreatingErrorMessage, postCount } = usePosts();
+  const {
+    creatPost,
+    isPostCreating,
+    postCreatingErrorMessage,
+    postCount,
+    getPosts,
+    posts, // Используем для обновления списка
+  } = usePosts();
 
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setFormData({ title: '', body: '', postId: 0, id: 0 });
+    setFormData({
+      title: '',
+      body: '',
+      postId: 0,
+      id: 0,
+      timestamp: Date.now(),
+    });
   };
 
   const handleChange = (event) => {
@@ -26,16 +40,31 @@ export const Creator = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (formData.title && formData.body) {
-      const formattedPost = {
-        ...formData,
-        postId: postCount + 1,
-        id: postCount + 1,
-      };
-      creatPost(formattedPost);
+  const handleCreator = async () => {
+    const formattedPost = {
+      postId: postCount + 1,
+      id: postCount + 1,
+      title: formData.title,
+      body: formData.body,
+      timestamp: Date.now(),
+    };
+
+    try {
+      await creatPost(formattedPost);
+
+      // Обновляем список постов и уведомляем пользователя
+      await getPosts(postCount + 1);
+      setNotification({ type: 'success', message: 'Post created successfully!' });
+
+      // Сбросить уведомление через 5 секунд
+      setTimeout(() => {
+        setNotification({ type: '', message: '' });
+      }, 5000);
+
       handleCloseModal();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setNotification({ type: 'error', message: errorMessage });
     }
   };
 
@@ -45,17 +74,30 @@ export const Creator = () => {
         Create Post
       </button>
 
+      {notification.message && (
+        <div
+          className={`${classes.notification} ${
+            notification.type === 'success' ? classes.success : classes.error
+          }`}
+        >
+          {notification.message}
+        </div>
+      )}
+
       {isModalOpen && (
         <>
-          {/* Затемнение фона */}
           <div className={classes.backdrop} onClick={handleCloseModal}></div>
 
-          {/* Модальное окно */}
           <div className={classes.modal}>
             <button className={classes.closeButton} onClick={handleCloseModal}>
               ×
             </button>
-            <form onSubmit={handleSubmit}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleCreator();
+              }}
+            >
               <h2>Create Post</h2>
 
               <div className={classes.field}>
