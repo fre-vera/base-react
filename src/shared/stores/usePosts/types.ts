@@ -7,6 +7,7 @@ export type PostFromAPI = {
   id: number;
   title: string;
   body: string;
+  timestamp: number;
 };
 
 /**********************************************
@@ -18,6 +19,7 @@ export type PostForCreate = {
   id: number;
   title: string;
   body: string;
+  timestamp: number;
 };
 
 /**********************************************
