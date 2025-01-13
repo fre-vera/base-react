@@ -6,6 +6,11 @@ import classes from './Creator.module.scss';
  * @typedef {import('./types').PostForCreate} PostForCreate
  */
 
+/**
+ * @function Creator
+ * @returns {JSX.Element}
+ */
+
 export const Creator = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(
@@ -19,7 +24,6 @@ export const Creator = () => {
     postCreatingErrorMessage,
     postCount,
     getPosts,
-    posts, // Используем для обновления списка
   } = usePosts();
 
   const handleOpenModal = () => setIsModalOpen(true);

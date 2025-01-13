@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getRandomColor } from '../../shared/utils';
 import classes from './Card.module.scss';
@@ -65,10 +64,6 @@ const Todo = (props) => {
 const Post = (props) => {
   const endPoint = `/post/${props.post.id}`;
   const background = getRandomColor();
-
-  useEffect(() => {
-    localStorage.setItem(String(props.post.id), background);
-  }, []);
 
   return (
     <div className={classes['post-container']}>
