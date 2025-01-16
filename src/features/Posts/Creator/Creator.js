@@ -18,25 +18,12 @@ export const Creator = () => {
   );
   const [notification, setNotification] = useState({ type: '', message: '' });
 
-  const {
-    creatPost,
-    isPostCreating,
-    postCreatingErrorMessage,
-    postCount,
-    getPosts,
-  } = usePosts();
+  const postsStore = usePosts();
 
-  const handleOpenModal = () => setIsModalOpen(true);
-
-  const handleCloseModal = () => {
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
     setIsModalOpen(false);
-    setFormData({
-      title: '',
-      body: '',
-      postId: 0,
-      id: 0,
-      timestamp: Date.now(),
-    });
+    setFormData({ title: '', body: '', postId: 0, timestamp: Date.now() });
   };
 
   const handleChange = (event) => {
@@ -44,37 +31,47 @@ export const Creator = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCreator = async () => {
-    const formattedPost = {
-      postId: postCount + 1,
-      id: postCount + 1,
+  const handlePostSuccess = async () => {
+    try {
+      await postsStore.getPosts(postsStore.postCount + 1);
+      setNotification({ type: 'success', message: 'Post created successfully!' });
+      setTimeout(() => setNotification({ type: '', message: '' }), 3000);
+      closeModal();
+    } catch (error) {
+      setNotification({ type: 'error', message: 'Failed to update posts.' });
+    }
+  };
+
+  const handlePostError = (error) => {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred.';
+    setNotification({ type: 'error', message: errorMessage });
+    setTimeout(() => setNotification({ type: '', message: '' }), 3000);
+  };
+
+  const handleCreator = async (event) => {
+    event.preventDefault();
+    const post = {
+      postId: postsStore.postCount + 1,
       title: formData.title,
       body: formData.body,
       timestamp: Date.now(),
     };
 
     try {
-      await creatPost(formattedPost);
-
-      // Обновляем список постов и уведомляем пользователя
-      await getPosts(postCount + 1);
-      setNotification({ type: 'success', message: 'Post created successfully!' });
-
-      // Сбросить уведомление через 5 секунд
-      setTimeout(() => {
-        setNotification({ type: '', message: '' });
-      }, 5000);
-
-      handleCloseModal();
+      await postsStore.createPost(post);
+      if (!postsStore.postCreatingErrorMessage) {
+        handlePostSuccess();
+      } else {
+        throw new Error(postsStore.postCreatingErrorMessage);
+      }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setNotification({ type: 'error', message: errorMessage });
+      handlePostError(error);
     }
   };
 
   return (
     <div className={classes.creatorContainer}>
-      <button className={classes.openButton} onClick={handleOpenModal}>
+      <button className={classes.openButton} onClick={openModal}>
         Create Post
       </button>
 
@@ -90,20 +87,13 @@ export const Creator = () => {
 
       {isModalOpen && (
         <>
-          <div className={classes.backdrop} onClick={handleCloseModal}></div>
-
+          <div className={classes.backdrop} onClick={closeModal}></div>
           <div className={classes.modal}>
-            <button className={classes.closeButton} onClick={handleCloseModal}>
+            <button className={classes.closeButton} onClick={closeModal}>
               ×
             </button>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleCreator();
-              }}
-            >
+            <form onSubmit={handleCreator}>
               <h2>Create Post</h2>
-
               <div className={classes.field}>
                 <label htmlFor="title">Title</label>
                 <input
@@ -117,7 +107,6 @@ export const Creator = () => {
                   required
                 />
               </div>
-
               <div className={classes.field}>
                 <label htmlFor="body">Body</label>
                 <textarea
@@ -130,26 +119,20 @@ export const Creator = () => {
                   required
                 />
               </div>
-
               <div className={classes.buttonContainer}>
                 <button
                   type="submit"
-                  disabled={isPostCreating}
+                  disabled={postsStore.isPostCreating}
                   className={classes.addButton}
                 >
-                  {isPostCreating ? 'Adding...' : 'Add Post'}
+                  {postsStore.isPostCreating ? 'Adding...' : 'Add Post'}
                 </button>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className={classes.cancelButton}
-                >
+                <button type="button" onClick={closeModal} className={classes.cancelButton}>
                   Cancel
                 </button>
               </div>
-
-              {postCreatingErrorMessage && (
-                <p className={classes.errorMessage}>{postCreatingErrorMessage}</p>
+              {postsStore.postCreatingErrorMessage && (
+                <p className={classes.errorMessage}>{postsStore.postCreatingErrorMessage}</p>
               )}
             </form>
           </div>
@@ -158,3 +141,4 @@ export const Creator = () => {
     </div>
   );
 };
+

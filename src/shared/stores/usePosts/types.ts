@@ -16,7 +16,6 @@ export type PostFromAPI = {
 
 export type PostForCreate = {
   postId: number;
-  id: number;
   title: string;
   body: string;
   timestamp: number;
@@ -49,7 +48,7 @@ export type PostStore = {
   isPostCreating: boolean;
   isPostCreated: boolean;
   postCreatingErrorMessage: string;
-  creatPost: (postData: PostFromAPI) => void;
+  createPost: (postData: PostForCreate) => void;
 };
 
 export type SetterCallback = (store: PostStore) => PostStore;

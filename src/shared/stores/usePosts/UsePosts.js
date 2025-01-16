@@ -46,13 +46,12 @@ const getPosts = async (set, count) => {
     const posts = Object.entries(data)
       .filter(([post]) => post !== null)
       .map(([id, post]) => ({ id, ...post }))
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, count);
+      .sort((a, b) => b.timestamp - a.timestamp);
 
     set(/** @type {SetterCallback} */(store) => ({
       ...store,
       isPostsLoading: false,
-      posts,
+      posts: [...posts],
       postsErrorMessage: '',
     }));
   } catch (/** @type {*} */ error) {
@@ -126,13 +125,13 @@ const resetPost = (set) => {
 };
 
 /**
- * @function creatPost
+ * @function createPost
  * @param {Function} set
  * @param {PostForCreate} postForCreate
  * @returns {Promise<void>}
  */
 
-const creatPost = async (set, postForCreate) => {
+const createPost = async (set, postForCreate) => {
   try {
     set(/** @type {SetterCallback} */(store) => ({
       ...store,
@@ -140,9 +139,6 @@ const creatPost = async (set, postForCreate) => {
       isPostCreated: false,
       postCreatingErrorMessage: '',
     }));
-    const timestamp = Date.now(); // Добавляем временную метку
-    const formattedPost = { ...postForCreate, timestamp };
-
     const queryOpts = {
       method: 'POST',
       body: JSON.stringify(postForCreate),
@@ -152,13 +148,9 @@ const creatPost = async (set, postForCreate) => {
     const response = await fetch(queryURL, queryOpts);
     if (!response.ok) throw new Error('Failed to create post');
     const resData = await response.json();
-    const newPost = {
-      ...formattedPost,
-      id: resData.name,
-    };
+
     set(/** @type {SetterCallback} */(store) => ({
       ...store,
-      posts: [newPost, ...store.posts],
       isPostCreating: false,
       isPostCreated: Boolean(resData),
       postCreatingErrorMessage: '',
@@ -202,5 +194,5 @@ export const usePosts = create(/** @type {StoreCreator} */(set) => ({
   isPostCreating: false,
   isPostCreated: false,
   postCreatingErrorMessage: '',
-  creatPost: partial(creatPost, set),
+  createPost: partial(createPost, set),
 }));
