@@ -167,6 +167,21 @@ const createPost = async (set, postForCreate) => {
 };
 
 /**
+ * @function resetPostCreation
+ * @param {Function} set
+ * @returns {void}
+ */
+
+const resetPostCreation = (set) => {
+  set(/** @type {SetterCallback} */(store) => ({
+    ...store,
+    isPostCreating: false,
+    isPostCreated: false,
+    postCreatingErrorMessage: '',
+  }));
+};
+
+/**
  * @function usePosts
  * @returns {PostsStore} postsStore
  */
@@ -195,4 +210,5 @@ export const usePosts = create(/** @type {StoreCreator} */(set) => ({
   isPostCreated: false,
   postCreatingErrorMessage: '',
   createPost: partial(createPost, set),
+  resetPostCreation: partial(resetPostCreation, set),
 }));

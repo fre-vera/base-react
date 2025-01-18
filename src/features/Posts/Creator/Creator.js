@@ -23,9 +23,8 @@ export const Creator = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
-    setFormData({ title: '', body: '', postId: 0, timestamp: Date.now() });
+    postsStore.resetPostCreation();
   };
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

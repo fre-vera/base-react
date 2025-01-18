@@ -21,6 +21,13 @@ export type PostForCreate = {
   timestamp: number;
 };
 
+export type PostForEdit = {
+  postId: number;
+  title: string;
+  body: string;
+
+};
+
 /**********************************************
   Store types
 **********************************************/
@@ -49,6 +56,7 @@ export type PostStore = {
   isPostCreated: boolean;
   postCreatingErrorMessage: string;
   createPost: (postData: PostForCreate) => void;
+  resetPostCreation: () => void;
 };
 
 export type SetterCallback = (store: PostStore) => PostStore;
