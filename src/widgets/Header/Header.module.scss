@@ -42,4 +42,13 @@
       color: #ccc;
     }
   }
+
+  .active {
+    color: #9acd32;
+    font-weight: bold;
+  }
+
+  [aria-disabled='true'] {
+    pointer-events: none;
+  }
 }

@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { API_BASE_URL } from 'shared/config';
+import { API_FIREBASE_URL } from 'shared/config';
 import { partial } from 'shared/utils';
 
 /**
  * @typedef {import('./types').StoreCreator} StoreCreator
+ * @typedef {import('./types').PostForCreate} PostForCreate
  * @typedef {import('./types').SetterCallback} SetterCallback
- * @typedef {import('./types').PostsStore} PostsStore
+ * @typedef {import('./types').PostStore} PostStore
  */
 
 /**
@@ -37,14 +38,20 @@ const getPosts = async (set, count) => {
       posts: [],
       postsErrorMessage: '',
     }));
-    const endPoint = `posts?_start=0&_limit=${count}`;
-    const response = await fetch(`${API_BASE_URL}/${endPoint}`);
+    const endPoint = `posts.json?orderBy="timestamp"&limitToLast=${count}`;
+    const response = await fetch(`${API_FIREBASE_URL}/${endPoint}`);
     if (!response.ok) throw new Error('Posts not received');
-    const posts = await response.json();
+    const data = await response.json();
+
+    const posts = Object.entries(data)
+      .filter(([post]) => post !== null)
+      .map(([id, post]) => ({ id, ...post }))
+      .sort((a, b) => b.timestamp - a.timestamp);
+
     set(/** @type {SetterCallback} */(store) => ({
       ...store,
       isPostsLoading: false,
-      posts,
+      posts: [...posts],
       postsErrorMessage: '',
     }));
   } catch (/** @type {*} */ error) {
@@ -85,8 +92,7 @@ const getPostById = async (set, id) => {
       post: null,
       postsErrorMessage: '',
     }));
-    const endPoint = `posts/${id}`;
-    const response = await fetch(`${API_BASE_URL}/${endPoint}`);
+    const response = await fetch(`${API_FIREBASE_URL}/posts/${id}.json`);
     if (!response.ok) throw new Error('Post not received');
     const post = await response.json();
     set(/** @type {SetterCallback} */(store) => ({
@@ -119,8 +125,65 @@ const resetPost = (set) => {
 };
 
 /**
+ * @function createPost
+ * @param {Function} set
+ * @param {PostForCreate} postForCreate
+ * @returns {Promise<void>}
+ */
+
+const createPost = async (set, postForCreate) => {
+  try {
+    set(/** @type {SetterCallback} */(store) => ({
+      ...store,
+      isPostCreating: true,
+      isPostCreated: false,
+      postCreatingErrorMessage: '',
+    }));
+    const queryOpts = {
+      method: 'POST',
+      body: JSON.stringify(postForCreate),
+      headers: { 'Content-type': 'application/json' },
+    };
+    const queryURL = `${API_FIREBASE_URL}/posts.json`;
+    const response = await fetch(queryURL, queryOpts);
+    if (!response.ok) throw new Error('Failed to create post');
+    const resData = await response.json();
+
+    set(/** @type {SetterCallback} */(store) => ({
+      ...store,
+      isPostCreating: false,
+      isPostCreated: Boolean(resData),
+      postCreatingErrorMessage: '',
+    }));
+  } catch (/** @type {*} */ error) {
+    const message = error.message;
+    set(/** @type {SetterCallback} */(store) => ({
+      ...store,
+      isPostCreating: false,
+      isPostCreated: false,
+      postCreatingErrorMessage: message,
+    }));
+  }
+};
+
+/**
+ * @function resetPostCreation
+ * @param {Function} set
+ * @returns {void}
+ */
+
+const resetPostCreation = (set) => {
+  set(/** @type {SetterCallback} */(store) => ({
+    ...store,
+    isPostCreating: false,
+    isPostCreated: false,
+    postCreatingErrorMessage: '',
+  }));
+};
+
+/**
  * @function usePosts
- * @returns {PostStore}
+ * @returns {PostsStore} postsStore
  */
 
 export const usePosts = create(/** @type {StoreCreator} */(set) => ({
@@ -128,17 +191,24 @@ export const usePosts = create(/** @type {StoreCreator} */(set) => ({
   postCount: 0,
   setPostCount: partial(setPostCount, set),
 
-  /* State for posts */
+  /* state for getting posts */
   isPostsLoading: false,
   posts: [],
   postsErrorMessage: '',
   getPosts: partial(getPosts, set),
   resetPosts: partial(resetPosts, set),
 
-  /* State for post store */
+  /* state for getting post */
   isPostLoading: false,
   post: null,
   postErrorMessage: '',
   getPostById: partial(getPostById, set),
   resetPost: partial(resetPost, set),
+
+  /* state for create post */
+  isPostCreating: false,
+  isPostCreated: false,
+  postCreatingErrorMessage: '',
+  createPost: partial(createPost, set),
+  resetPostCreation: partial(resetPostCreation, set),
 }));

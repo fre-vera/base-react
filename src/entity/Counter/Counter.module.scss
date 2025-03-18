@@ -5,11 +5,13 @@
   margin: 10px 20px;
   position: relative;
   overflow: hidden;
-  border: 2px solid #fe6637;
+  border: 2px solid #9acd32;
   border-radius: 8px;
   font-family: 'Montserrat', sans-serif;
-  color: #fe6637;
+  color: #000000;
+  font-weight: bold;
   transition: .2s ease-in-out;
+  cursor: pointer;
 }
 .button:before {
   content: "";
@@ -22,7 +24,7 @@
   transform: skewX(-45deg);
 }
 .button:hover {
-  background: #fe6637;
+  background: #9acd32;
   color: #fff;
 }
 .button:hover:before {
